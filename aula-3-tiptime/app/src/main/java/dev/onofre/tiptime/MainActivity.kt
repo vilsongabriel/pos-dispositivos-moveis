@@ -18,6 +18,17 @@ class MainActivity : AppCompatActivity() {
         binding.calculateButton.setOnClickListener {
             calculateTip()
         }
+
+        setTip(0.0)
+
+        if (savedInstanceState != null) {
+            binding.tipResult.text = savedInstanceState.getString("result")
+        }
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putString("result", binding.tipResult.text.toString())
     }
 
     private fun calculateTip() {
@@ -36,8 +47,11 @@ class MainActivity : AppCompatActivity() {
             tip = ceil(tip)
         }
 
-        val formattedTip = NumberFormat.getCurrencyInstance().format(tip)
+        setTip(tip)
+    }
 
+    private fun setTip(tip: Double) {
+        val formattedTip = NumberFormat.getCurrencyInstance().format(tip)
         binding.tipResult.text = getString(R.string.tip_amount, formattedTip.toString())
     }
 }
