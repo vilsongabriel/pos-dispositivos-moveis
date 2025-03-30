@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+    <!-- Define a fixed height to ensure the stroke isn't clipped -->
+    <size android:height="4dp" />
+    <!-- A transparent fill ensures the drawable renders its stroke properly -->
+    <solid android:color="@android:color/transparent" />
+    <stroke
+        android:width="2dp"
+        android:color="@color/black"
+        android:dashWidth="4dp"
+        android:dashGap="2dp" />
+</shape>
