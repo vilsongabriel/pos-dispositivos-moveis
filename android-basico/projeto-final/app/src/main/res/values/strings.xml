@@ -1,3 +1,28 @@
 <resources>
     <string name="app_name">FlexCalculator</string>
+    <string name="label_fuels">Combustíveis:</string>
+    <string name="action_select">Selecione</string>
+    <string name="label_consumption">Consumo:</string>
+    <string name="default_consumption">0.0 km/l</string>
+    <string name="label_price">Preço:</string>
+    <string name="currency_real">R$</string>
+    <string name="btn_calculate">Calcular</string>
+    <string name="msg_select_two_fuels">Selecione os dois combustíveis</string>
+    <string name="msg_enter_valid_prices">Informe preços válidos</string>
+    <string name="title_set_consumption">Defina o Consumo</string>
+    <string name="button_ok">OK</string>
+    <string name="msg_invalid_consumption">Consumo inválido</string>
+    <string name="button_cancel">Cancelar</string>
+    <string name="custom_fuel_name">Personalizado</string>
+    <string name="error_fuel_null">Informe o cumbustível</string>
+    <string name="label_consumption_value">%.1f km/l</string>
+    <string name="btn_back">Voltar</string>
+    <string name="fuel_equality">%1$s e %2$s\npossuem a mesma eficiência:\n\n%1$s: R$ %3$.2f/km\n%2$s: R$ %4$.2f/km</string>
+    <string name="fuel_advantage">O combustível mais vantajoso é:\n\n%1$s\n\n%2$s: R$ %3$.2f/km\n%4$s: R$ %5$.2f/km</string>
+    <string name="fuel_1">Combustível 1</string>
+    <string name="fuel_2">Combustível 2</string>
+    <string name="fuel_gasoline">Gasolina</string>
+    <string name="fuel_ethanol">Etanol</string>
+    <string name="fuel_diesel">Diesel</string>
+    <string name="fuel_custom">Personalizado</string>
 </resources>

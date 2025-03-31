@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:padding="20dp"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:background="@color/background_main">
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp"
+        app:strokeColor="@color/white"
+        app:strokeWidth="2dp"
+        app:cardCornerRadius="0dp"
+        app:contentPadding="20dp">
+
+        <TextView
+            android:id="@+id/tvResult"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:textSize="12sp"
+            android:textColor="@color/black"
+            android:lineSpacingExtra="3.5sp"
+            android:gravity="center" />
+    </com.google.android.material.card.MaterialCardView>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnBack"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/btn_back"
+        android:layout_marginTop="20dp"
+        android:textColor="@color/white"
+        android:textSize="15sp"
+        app:backgroundTint="@color/background_button"
+        app:cornerRadius="0dp"
+        app:strokeColor="@color/white"
+        app:strokeWidth="2dp" />
+
+</LinearLayout>
