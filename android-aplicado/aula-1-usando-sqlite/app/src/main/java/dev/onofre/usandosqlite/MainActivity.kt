@@ -1,33 +1,24 @@
 package dev.onofre.usandosqlite
 
-import android.content.ContentValues
-import android.database.sqlite.SQLiteDatabase
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import dev.onofre.usandosqlite.database.DatabaseHandler
 import dev.onofre.usandosqlite.databinding.ActivityMainBinding
+import dev.onofre.usandosqlite.entity.Cadastro
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
-    private lateinit var db: SQLiteDatabase
+    private lateinit var db: DatabaseHandler
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.main)
         setButtonListeners()
-        setupDatabase()
-    }
-
-    private fun setupDatabase() {
-        db = SQLiteDatabase.openOrCreateDatabase(
-            this.getDatabasePath("dbfile.sqlite"),
-            null
-        )
-        var createTableQuery = "CREATE TABLE IF NOT EXISTS cadastro(_id INTEGER PRIMARY KEY AUTOINCREMENT, nome TEXT, telefone TEXT)"
-        db.execSQL(createTableQuery)
+        db = DatabaseHandler(this)
     }
 
     private fun setButtonListeners() {
@@ -48,89 +39,88 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    private fun clearFields() {
+        binding.etCod.setText("")
+        binding.etNome.setText("")
+        binding.etTelefone.setText("")
+    }
+
+    private fun showToast(text: String) {
+        Toast.makeText(this, text, Toast.LENGTH_SHORT).show()
+    }
+
     private fun handleIncluirClick() {
         val nome = binding.etNome.text.toString()
         val telefone = binding.etTelefone.text.toString()
         if (nome == "" || telefone == "") {
-            Toast.makeText(this, "Preencha nome e telefone", Toast.LENGTH_SHORT).show()
-            return
+            return showToast(getString(R.string.error_name_phone))
         }
-        val register = ContentValues()
-        register.put("nome", binding.etNome.text.toString())
-        register.put("telefone", binding.etTelefone.text.toString())
-        db.insert("cadastro", null, register)
-        binding.etNome.setText("")
-        binding.etTelefone.setText("")
-        Toast.makeText(this, "Registro incluido!", Toast.LENGTH_LONG).show()
+        db.insert(Cadastro (
+            0,
+            nome,
+            telefone,
+        ))
+        clearFields()
+        showToast(getString(R.string.message_insert_success))
     }
 
     private fun handleAlterarClick() {
         val codigo = binding.etCod.text.toString()
         val nome = binding.etNome.text.toString()
         val telefone = binding.etTelefone.text.toString()
-        if (codigo == "" || nome == "" || telefone == "") {
-            Toast.makeText(this, "Preencha todos os campos", Toast.LENGTH_SHORT).show()
-            return
-        }
-        val register = ContentValues()
-        register.put("nome", binding.etNome.text.toString())
-        register.put("telefone", binding.etTelefone.text.toString())
-        val updated = db.update("cadastro", register, "_id=${codigo}", null)
-        val message: String = if (updated > 0) "Registro alterado!" else "Registro não encontrado!"
-        Toast.makeText(this, message, Toast.LENGTH_LONG).show()
+        if (codigo == "" || nome == "" || telefone == "") return showToast(getString(R.string.error_empty_fields))
+        val updated = db.update(Cadastro (
+            codigo.toInt(),
+            nome,
+            telefone,
+        ))
+        val message: String = if (updated > 0) getString(R.string.message_update_success) else getString(
+            R.string.message_not_found
+        )
+        showToast(message)
     }
 
     private fun handleExcluirClick() {
         val codigo = binding.etCod.text.toString()
-        if (codigo == "") {
-            Toast.makeText(this, "Insira um código!", Toast.LENGTH_SHORT).show()
-            return
-        }
-        val deleted = db.delete("cadastro", "_id=${codigo}", null)
-        val message: String = if (deleted > 0) "Registro deletado" else "Registro não encontrado!"
-        Toast.makeText(this, message, Toast.LENGTH_LONG).show()
+        if (codigo == "") return showToast(getString(R.string.error_code))
+        val deleted = db.delete(codigo.toInt())
+        clearFields()
+        val message: String = if (deleted > 0) getString(R.string.message_delete_success) else getString(
+            R.string.message_not_found
+        )
+        showToast(message)
     }
 
     private fun handlePesquisarClick() {
         val codigo = binding.etCod.text.toString()
         if (codigo == "") {
-            Toast.makeText(this, "Insira um código!", Toast.LENGTH_SHORT).show()
-            return
+            return showToast(getString(R.string.error_code))
         }
-        val register = db.query("cadastro", null, "_id=${codigo}", null, null, null, null)
-        if (register.moveToNext()) {
-            binding.etNome.setText(register.getString(NOME))
-            binding.etTelefone.setText(register.getString(TELEFONE))
+        val cadastro = db.find(codigo.toInt())
+        if (cadastro !== null) {
+            binding.etNome.setText(cadastro.nome)
+            binding.etTelefone.setText(cadastro.telefone)
         } else {
-            binding.etNome.setText("")
-            binding.etTelefone.setText("")
-            Toast.makeText(this, "Registro não encontrado", Toast.LENGTH_LONG).show()
+            clearFields()
+            showToast(getString(R.string.message_not_found))
         }
-        register.close()
     }
 
     private fun handleListarClick() {
-        val register = db.query("cadastro", null, null, null, null, null, null)
+        val cadastros = db.list()
         val output = StringBuilder()
-        while (register.moveToNext()) {
-            output.append("${register.getString(NOME)} - ${register.getString(TELEFONE)}\n")
+        for (cadastro in cadastros) {
+            output.append("${cadastro.id} - ${cadastro.nome} - ${cadastro.telefone}\n")
         }
-        register.close()
 
         val builder: AlertDialog.Builder = AlertDialog.Builder(this)
         builder
             .setMessage(output)
-            .setTitle("Registros")
-            .setNegativeButton("Fechar") { dialog, which -> dialog.dismiss() }
+            .setTitle(getString(R.string.modal_title_entries))
+            .setNegativeButton(getString(R.string.modal_button_close)) { dialog, which -> dialog.dismiss() }
 
         val dialog: AlertDialog = builder.create()
         dialog.show()
-    }
-
-    companion object {
-        private const val ID = 0
-        private const val NOME = 1
-        private const val TELEFONE = 2
     }
 
 }

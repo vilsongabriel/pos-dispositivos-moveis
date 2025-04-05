@@ -8,4 +8,13 @@
     <string name="button_excluir">Excluir</string>
     <string name="button_pesquisar">Pesquisar</string>
     <string name="button_listar">Listar</string>
+    <string name="modal_title_entries">Registros</string>
+    <string name="modal_button_close">Fechar</string>
+    <string name="error_name_phone">Preencha nome e telefone!</string>
+    <string name="error_empty_fields">Preencha todos os campos!</string>
+    <string name="error_code">Insira um código!</string>
+    <string name="message_insert_success">Registro incluido!</string>
+    <string name="message_update_success">Registro alterado!</string>
+    <string name="message_not_found">Registro não encontrado!</string>
+    <string name="message_delete_success">Registro deletado!</string>
 </resources>
