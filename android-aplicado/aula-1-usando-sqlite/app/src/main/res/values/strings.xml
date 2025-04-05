@@ -1,13 +1,13 @@
 <resources>
     <string name="app_name">UsandoSQLite</string>
-    <string name="label_codigo">Código:</string>
-    <string name="label_nome">Nome:</string>
-    <string name="label_telefone">Telefone:</string>
-    <string name="button_incluir">Incluir</string>
-    <string name="button_alterar">Alterar</string>
-    <string name="button_excluir">Excluir</string>
-    <string name="button_pesquisar">Pesquisar</string>
-    <string name="button_listar">Listar</string>
+    <string name="label_code">Código:</string>
+    <string name="label_name">Nome:</string>
+    <string name="label_phone">Telefone:</string>
+    <string name="button_create">Incluir</string>
+    <string name="button_update">Alterar</string>
+    <string name="button_delete">Excluir</string>
+    <string name="button_search">Pesquisar</string>
+    <string name="button_list">Listar</string>
     <string name="modal_title_entries">Registros</string>
     <string name="modal_button_close">Fechar</string>
     <string name="error_name_phone">Preencha nome e telefone!</string>

@@ -17,7 +17,7 @@
         <TextView
             android:layout_width="80dp"
             android:layout_height="wrap_content"
-            android:text="@string/label_codigo" />
+            android:text="@string/label_code" />
 
         <EditText
             android:id="@+id/etCode"
@@ -34,7 +34,7 @@
         <TextView
             android:layout_width="80dp"
             android:layout_height="wrap_content"
-            android:text="@string/label_nome" />
+            android:text="@string/label_name" />
 
         <EditText
             android:id="@+id/etName"
@@ -50,7 +50,7 @@
         <TextView
             android:layout_width="80dp"
             android:layout_height="wrap_content"
-            android:text="@string/label_telefone" />
+            android:text="@string/label_phone" />
 
         <EditText
             android:id="@+id/etPhone"
@@ -63,30 +63,30 @@
         android:id="@+id/btCreate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/button_incluir" />
+        android:text="@string/button_create" />
 
     <Button
         android:id="@+id/btUpdate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/button_alterar" />
+        android:text="@string/button_update" />
 
     <Button
         android:id="@+id/btDelete"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/button_excluir" />
+        android:text="@string/button_delete" />
 
     <Button
         android:id="@+id/btSearch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/button_pesquisar" />
+        android:text="@string/button_search" />
 
     <Button
         android:id="@+id/btList"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/button_listar" />
+        android:text="@string/button_list" />
 
 </LinearLayout>
