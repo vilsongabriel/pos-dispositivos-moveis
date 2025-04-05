@@ -20,7 +20,7 @@
             android:text="@string/label_codigo" />
 
         <EditText
-            android:id="@+id/etCod"
+            android:id="@+id/etCode"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="number" />
@@ -37,7 +37,7 @@
             android:text="@string/label_nome" />
 
         <EditText
-            android:id="@+id/etNome"
+            android:id="@+id/etName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
     </LinearLayout>
@@ -53,38 +53,38 @@
             android:text="@string/label_telefone" />
 
         <EditText
-            android:id="@+id/etTelefone"
+            android:id="@+id/etPhone"
             android:inputType="phone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
     </LinearLayout>
 
     <Button
-        android:id="@+id/btIncluir"
+        android:id="@+id/btCreate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/button_incluir" />
 
     <Button
-        android:id="@+id/btAlterar"
+        android:id="@+id/btUpdate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/button_alterar" />
 
     <Button
-        android:id="@+id/btExcluir"
+        android:id="@+id/btDelete"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/button_excluir" />
 
     <Button
-        android:id="@+id/btPesquisar"
+        android:id="@+id/btSearch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/button_pesquisar" />
 
     <Button
-        android:id="@+id/btListar"
+        android:id="@+id/btList"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/button_listar" />

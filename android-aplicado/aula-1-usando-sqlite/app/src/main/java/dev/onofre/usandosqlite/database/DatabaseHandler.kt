@@ -4,19 +4,18 @@ import android.content.ContentValues
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
-import dev.onofre.usandosqlite.entity.Cadastro
+import dev.onofre.usandosqlite.entity.Registration
 
-
-class DatabaseHandler(context: Context): SQLiteOpenHelper(context, DATABASE_NAME, null, DATABASE_VERSION) {
+class DatabaseHandler(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null, DATABASE_VERSION) {
 
     companion object {
         private const val DATABASE_VERSION = 1
         private const val DATABASE_NAME = "dbfile.sqlite"
-        private const val TABLE_NAME = "cadastro"
+        private const val TABLE_NAME = "registration"
         enum class Fields(val index: Int, val columnName: String) {
             ID(0, "_id"),
-            NOME(1, "nome"),
-            TELEFONE(2, "telefone");
+            NAME(1, "name"),
+            PHONE(2, "phone")
         }
     }
 
@@ -24,18 +23,14 @@ class DatabaseHandler(context: Context): SQLiteOpenHelper(context, DATABASE_NAME
         val createTableQuery = """
             CREATE TABLE IF NOT EXISTS $TABLE_NAME (
                 ${Fields.ID.columnName} INTEGER PRIMARY KEY AUTOINCREMENT,
-                ${Fields.NOME.columnName} TEXT,
-                ${Fields.TELEFONE.columnName} TEXT
+                ${Fields.NAME.columnName} TEXT,
+                ${Fields.PHONE.columnName} TEXT
             )
         """.trimIndent()
         db?.execSQL(createTableQuery)
     }
 
-    override fun onUpgrade(
-        db: SQLiteDatabase?,
-        oldVersion: Int,
-        newVersion: Int
-    ) {
+    override fun onUpgrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {
         db?.execSQL("DROP TABLE IF EXISTS $TABLE_NAME")
         onCreate(db)
     }
@@ -46,52 +41,49 @@ class DatabaseHandler(context: Context): SQLiteOpenHelper(context, DATABASE_NAME
         }
     }
 
-    fun insert(cadastro: Cadastro): Long = withDatabase { db ->
+    fun insert(registration: Registration): Long = withDatabase { db ->
         val values = ContentValues().apply {
-            put(Fields.NOME.columnName, cadastro.nome)
-            put(Fields.TELEFONE.columnName, cadastro.telefone)
+            put(Fields.NAME.columnName, registration.name)
+            put(Fields.PHONE.columnName, registration.phone)
         }
         db.insert(TABLE_NAME, null, values)
     }
 
-    fun update(cadastro: Cadastro): Int = withDatabase { db ->
+    fun update(registration: Registration): Int = withDatabase { db ->
         val values = ContentValues().apply {
-            put(Fields.NOME.columnName, cadastro.nome)
-            put(Fields.TELEFONE.columnName, cadastro.telefone)
+            put(Fields.NAME.columnName, registration.name)
+            put(Fields.PHONE.columnName, registration.phone)
         }
-        db.update(TABLE_NAME, values, "${Fields.ID.columnName} = ?", arrayOf(cadastro.id.toString()))
+        db.update(TABLE_NAME, values, "${Fields.ID.columnName} = ?", arrayOf(registration.id.toString()))
     }
 
-    fun delete (id: Int): Int = withDatabase { db ->
+    fun delete(id: Int): Int = withDatabase { db ->
         db.delete(TABLE_NAME, "${Fields.ID.columnName} = ?", arrayOf(id.toString()))
     }
 
-    fun find (id: Int): Cadastro? = withDatabase { db ->
-        db.query(TABLE_NAME, null, "_id=${id}", null, null, null, null).use { cursor ->
+    fun find(id: Int): Registration? = withDatabase { db ->
+        db.query(TABLE_NAME, null, "${Fields.ID.columnName} = ?", arrayOf(id.toString()), null, null, null).use { cursor ->
             if (cursor.moveToFirst()) {
-                Cadastro(
+                Registration(
                     id,
-                    cursor.getString(Fields.NOME.index),
-                    cursor.getString(Fields.TELEFONE.index)
+                    cursor.getString(Fields.NAME.index),
+                    cursor.getString(Fields.PHONE.index)
                 )
             } else null
         }
     }
 
-    fun list (): List<Cadastro> = withDatabase { db ->
-        val cursor = db.query(TABLE_NAME, null, null, null, null, null, null)
-        cursor.use {
+    fun list(): List<Registration> = withDatabase { db ->
+        db.query(TABLE_NAME, null, null, null, null, null, null).use { cursor ->
             buildList {
                 while (cursor.moveToNext()) {
-                    add(Cadastro(
+                    add(Registration(
                         cursor.getInt(Fields.ID.index),
-                        cursor.getString(Fields.NOME.index),
-                        cursor.getString(Fields.TELEFONE.index)
+                        cursor.getString(Fields.NAME.index),
+                        cursor.getString(Fields.PHONE.index)
                     ))
                 }
             }
         }
     }
-
-
 }
