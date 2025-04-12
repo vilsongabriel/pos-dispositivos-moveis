@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".MainActivity">
+
+    <CheckBox
+        android:id="@+id/checkbox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Formado?"
+        style="?android:attr/starStyle" />
+
+    <RatingBar
+        android:id="@+id/rating_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:numStars="5"
+        android:stepSize="0.5" />
+
+    <DatePicker
+        android:id="@+id/datepicker"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:datePickerMode="spinner"
+        android:calendarViewShown="false" />
+
+   <Button
+       android:id="@+id/button_test"
+       android:onClick="handleButtonTestOnClick"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:text="Testar componente" />
+
+    <Button
+        android:id="@+id/button_calendar"
+        android:onClick="handleButtonCalendarOnClick"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Abrir calendario" />
+
+</LinearLayout>
