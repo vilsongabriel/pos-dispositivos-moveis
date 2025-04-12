@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="15dp"
-    tools:context=".MainActivity">
+    tools:context=".RegistrationActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -23,7 +23,7 @@
             android:id="@+id/etCode"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="number" />
+            android:editable="false" />
     </LinearLayout>
 
     <LinearLayout
@@ -60,16 +60,10 @@
     </LinearLayout>
 
     <Button
-        android:id="@+id/btCreate"
+        android:id="@+id/btSave"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/button_create" />
-
-    <Button
-        android:id="@+id/btUpdate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/button_update" />
+        android:text="@string/button_save" />
 
     <Button
         android:id="@+id/btDelete"
@@ -82,11 +76,5 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/button_search" />
-
-    <Button
-        android:id="@+id/btList"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/button_list" />
 
 </LinearLayout>

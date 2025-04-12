@@ -3,11 +3,10 @@
     <string name="label_code">Código:</string>
     <string name="label_name">Nome:</string>
     <string name="label_phone">Telefone:</string>
-    <string name="button_create">Incluir</string>
-    <string name="button_update">Alterar</string>
+    <string name="button_save">Salvar</string>
     <string name="button_delete">Excluir</string>
     <string name="button_search">Pesquisar</string>
-    <string name="button_list">Listar</string>
+    <string name="button_back">Voltar</string>
     <string name="modal_title_entries">Registros</string>
     <string name="modal_button_close">Fechar</string>
     <string name="error_name_phone">Preencha nome e telefone!</string>
@@ -18,4 +17,8 @@
     <string name="message_not_found">Registro não encontrado!</string>
     <string name="message_delete_success">Registro deletado!</string>
     <string name="button_description_edit">Editar</string>
+    <string name="button_new_registration">Novo cadastro</string>
+    <string name="modal_search_title">Pesquisar cadastro</string>
+    <string name="modal_search_close">Fechar</string>
+    <string name="modal_search_confirm">Pesquisar</string>
 </resources>

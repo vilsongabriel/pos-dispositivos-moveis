@@ -1,5 +1,6 @@
 package dev.onofre.usandosqlite
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import dev.onofre.usandosqlite.adapter.RegistrationAdapter
@@ -16,10 +17,22 @@ class ListActivity : AppCompatActivity() {
         binding = ActivityListBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        setupListeners()
+
         db = DatabaseHandler(this)
         val registrations = db.list()
 
         val adapter = RegistrationAdapter(this, registrations)
         binding.lvRegistrations.adapter = adapter
+    }
+
+    private fun setupListeners () {
+        binding.fabAdd.setOnClickListener {
+            handleAddClick()
+        }
+    }
+
+    private fun handleAddClick () {
+        startActivity(Intent(this, RegistrationActivity::class.java))
     }
 }
