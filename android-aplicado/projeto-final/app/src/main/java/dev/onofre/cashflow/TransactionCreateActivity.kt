@@ -103,8 +103,9 @@ class TransactionCreateActivity : AppCompatActivity() {
                 }
                 categoryAdapter.notifyDataSetChanged()
 
-            } catch (e: Exception) {
-                Toast.makeText(this@TransactionCreateActivity, "Erro ao buscar categorias", Toast.LENGTH_SHORT).show()
+            } catch (_: Exception) {
+                Toast.makeText(this@TransactionCreateActivity,
+                    getString(R.string.toast_fetch_error), Toast.LENGTH_SHORT).show()
                 categoryAdapter.clear()
                 binding.spinnerCreateCategory.visibility = View.GONE
                 categoryAdapter.notifyDataSetChanged()
@@ -163,8 +164,9 @@ class TransactionCreateActivity : AppCompatActivity() {
         val timestamp = selectedDateTime.timeInMillis
 
         if (description.isBlank()) {
-            Toast.makeText(this, "Por favor, insira uma descrição.", Toast.LENGTH_SHORT).show()
-            binding.etCreateDescription.error = "Obrigatório"
+            Toast.makeText(this,
+                getString(R.string.toast_error_fill_description), Toast.LENGTH_SHORT).show()
+            binding.etCreateDescription.error = getString(R.string.required)
             return
         } else {
             binding.etCreateDescription.error = null
@@ -172,8 +174,8 @@ class TransactionCreateActivity : AppCompatActivity() {
 
         val amount = amountStr.toDoubleOrNull()
         if (amount == null || amount <= 0) {
-            Toast.makeText(this, "Por favor, insira um valor válido e positivo.", Toast.LENGTH_SHORT).show()
-            binding.etCreateAmount.error = "Valor inválido"
+            Toast.makeText(this, getString(R.string.toast_error_invalid_value), Toast.LENGTH_SHORT).show()
+            binding.etCreateAmount.error = getString(R.string.invalid_value)
             return
         } else {
             binding.etCreateAmount.error = null
@@ -187,12 +189,12 @@ class TransactionCreateActivity : AppCompatActivity() {
         }
 
         if (type == null) {
-            Toast.makeText(this, "Por favor, selecione o tipo (Entrada/Saída).", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, getString(R.string.toast_error_invalid_type), Toast.LENGTH_SHORT).show()
             return
         }
 
         if (binding.spinnerCreateCategory.visibility != View.VISIBLE || selectedCategory.isNullOrBlank()) {
-            Toast.makeText(this, "Por favor, selecione uma categoria.", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, getString(R.string.toast_error_select_category), Toast.LENGTH_SHORT).show()
             return
         }
 

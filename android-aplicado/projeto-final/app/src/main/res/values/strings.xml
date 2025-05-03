@@ -1,3 +1,28 @@
 <resources>
-    <string name="app_name">Cashflow2000</string>
+    <string name="app_name">Cashflow2000 Plus Pro Ultra 2.0</string>
+    <string name="tv_balance_label">Saldo Atual:</string>
+    <string name="til_search">Buscar por descrição…</string>
+    <string name="fab_add">Adicionar Transação</string>
+    <string name="tv_create_title">Nova Transação</string>
+    <string name="et_description">Descrição</string>
+    <string name="et_amount">Valor</string>
+    <string name="tv_type_label">Tipo:</string>
+    <string name="rb_income">Entrada</string>
+    <string name="rb_expense">Saída</string>
+    <string name="tv_category_label">Categoria:</string>
+    <string name="tv_datetime_label">Data e Hora:</string>
+    <string name="btn_save">Salvar Transação</string>
+    <string name="toast_fetch_error">Erro ao buscar categorias</string>
+    <string name="toast_error_fill_description">Por favor, insira uma descrição.</string>
+    <string name="required">Obrigatório</string>
+    <string name="toast_error_invalid_value">Por favor, insira um valor válido e positivo.</string>
+    <string name="toast_error_invalid_type">Por favor, selecione o tipo (Entrada/Saída).</string>
+    <string name="toast_error_select_category">Por favor, selecione uma categoria.</string>
+    <string name="invalid_value">Valor inválido</string>
+    <string name="toast_error_fetch_transaction">Erro ao receber dados da transação.</string>
+    <string name="toast_transaction_saved">Transação salva!</string>
+    <string name="toast_error_save_transaction">Erro ao salvar transação.</string>
+    <string name="toast_error_process_transaction">Erro ao processar dados da transação.</string>
+    <string name="toast_error_load_transaction_list">Erro ao carregar lista: %1$s</string>
+    <string name="toast_error_fetch_balance">Erro ao carregar saldo: %1$s</string>
 </resources>

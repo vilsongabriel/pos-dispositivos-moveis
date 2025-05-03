@@ -11,7 +11,7 @@
         android:id="@+id/tv_create_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Nova Transação"
+        android:text="@string/tv_create_title"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -21,7 +21,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:hint="Descrição"
+        android:hint="@string/et_description"
         android:inputType="textCapSentences"
         android:importantForAutofill="no"
         app:layout_constraintEnd_toEndOf="parent"
@@ -33,7 +33,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:hint="Valor"
+        android:hint="@string/et_amount"
         android:inputType="numberDecimal"
         android:importantForAutofill="no"
         app:layout_constraintEnd_toEndOf="parent"
@@ -45,7 +45,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="Tipo:"
+        android:text="@string/tv_type_label"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/et_create_amount" />
@@ -65,14 +65,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
-            android:text="Entrada"
+            android:text="@string/rb_income"
             android:checked="true" />
 
         <RadioButton
             android:id="@+id/rb_create_expense"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Saída" />
+            android:text="@string/rb_expense" />
     </RadioGroup>
 
     <TextView
@@ -80,7 +80,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="Categoria:"
+        android:text="@string/tv_category_label"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/rg_create_type" />
@@ -102,7 +102,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="Data e Hora:"
+        android:text="@string/tv_datetime_label"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/spinner_create_category" />
@@ -120,7 +120,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_create_datetime_label"
-        tools:text="01/05/2025 10:30" />
+        tools:text="" />
 
 
     <Button
@@ -128,7 +128,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
-        android:text="Salvar Transação"
+        android:text="@string/btn_save"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_create_datetime_value" />

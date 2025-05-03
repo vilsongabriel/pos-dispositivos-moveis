@@ -5,7 +5,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
@@ -37,7 +36,8 @@ class MainActivity : AppCompatActivity() {
             if (data != null) {
                 handleTransactionResult(data)
             } else {
-                Toast.makeText(this, "Erro ao receber dados da transação.", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this,
+                    getString(R.string.toast_error_fetch_transaction), Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -99,22 +99,23 @@ class MainActivity : AppCompatActivity() {
                 try {
                     val addedId = repository.addTransaction(newTransaction)
                     if (addedId > 0) {
-                        Toast.makeText(this@MainActivity, "Transação salva!", Toast.LENGTH_SHORT).show()
-                        binding.etMainSearch.text.clear()
+                        Toast.makeText(this@MainActivity,
+                            getString(R.string.toast_transaction_saved), Toast.LENGTH_SHORT).show()
+                        binding.etMainSearch.text?.clear()
                         refreshTransactionList()
                         refreshCurrentBalance()
                     } else {
-                        Toast.makeText(this@MainActivity, "Erro ao salvar transação.", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this@MainActivity,
+                            getString(R.string.toast_error_save_transaction), Toast.LENGTH_SHORT).show()
                     }
                 } catch (e: Exception) {
-                    Log.e("MainActivity", "Error adding transaction", e)
-                    Toast.makeText(this@MainActivity, "Erro ao salvar transação: ${e.message}", Toast.LENGTH_LONG).show()
+                    Toast.makeText(this@MainActivity, "${R.string.toast_error_save_transaction}: ${e.message}", Toast.LENGTH_LONG).show()
                 }
             }
 
         } else {
-            Log.w("MainActivity", "Invalid data received from TransactionCreateActivity")
-            Toast.makeText(this, "Erro ao processar dados da transação.", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this,
+                getString(R.string.toast_error_process_transaction), Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -135,7 +136,8 @@ class MainActivity : AppCompatActivity() {
                 }
                 transactionAdapter.updateList(transactions)
             } catch (e: Exception) {
-                Toast.makeText(this@MainActivity, "Erro ao carregar lista: ${e.message}", Toast.LENGTH_LONG).show()
+                Toast.makeText(this@MainActivity,
+                    getString(R.string.toast_error_load_transaction_list, e.message), Toast.LENGTH_LONG).show()
                 transactionAdapter.updateList(emptyList())
             }
         }
@@ -147,7 +149,8 @@ class MainActivity : AppCompatActivity() {
                 val balance = repository.getCurrentBalance()
                 binding.tvMainBalanceValue.text = formatCurrency(balance)
             } catch (e: Exception) {
-                Toast.makeText(this@MainActivity, "Erro ao carregar saldo: ${e.message}", Toast.LENGTH_LONG).show()
+                Toast.makeText(this@MainActivity,
+                    getString(R.string.toast_error_fetch_balance, e.message), Toast.LENGTH_LONG).show()
                 binding.tvMainBalanceValue.text = formatCurrency(0.0)
             }
         }

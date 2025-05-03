@@ -60,7 +60,10 @@ class TransactionAdapter(
                 amountPrefix = "- "
             }
 
-            binding.tvItemAmount.text = amountPrefix + formattedAmount
+            binding.tvItemAmount.text = buildString {
+                append(amountPrefix)
+                append(formattedAmount)
+            }
             binding.tvItemAmount.setTextColor(ContextCompat.getColor(binding.root.context, colorRes))
         }
     }

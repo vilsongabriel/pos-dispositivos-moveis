@@ -20,13 +20,14 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+
     <TextView
         android:id="@+id/tv_main_balance_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
-        android:text="Saldo Atual:"
+        android:text="@string/tv_balance_label"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tv_main_title" />
@@ -42,23 +43,30 @@
         app:layout_constraintBaseline_toBaselineOf="@id/tv_main_balance_label"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/tv_main_balance_label"
-        tools:text="R$ 1.234,56" />
+        tools:text="" />
 
-    <EditText
-        android:id="@+id/et_main_search"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/til_main_search"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
-        android:hint="Buscar por descrição..."
-        android:inputType="text"
-        android:importantForAutofill="no"
-        android:drawableStart="@android:drawable/ic_menu_search"
-        android:drawablePadding="8dp"
+        android:hint="@string/til_search"
+        app:startIconDrawable="@drawable/ic_search"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_main_balance_label" />
+        app:layout_constraintTop_toBottomOf="@id/tv_main_balance_label">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/et_main_search"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            android:importantForAutofill="no" />
+
+    </com.google.android.material.textfield.TextInputLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_main_transactions"
@@ -71,7 +79,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/et_main_search"
+        app:layout_constraintTop_toBottomOf="@id/til_main_search"
         tools:listitem="@layout/list_item_transaction" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -79,7 +87,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="24dp"
-        android:contentDescription="Adicionar Transação"
+        android:contentDescription="@string/fab_add"
+        app:backgroundTint="#FFCA28"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:srcCompat="@android:drawable/ic_input_add" />
