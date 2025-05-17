@@ -10,4 +10,17 @@
     <string name="to_favorite">Favoritar</string>
     <string name="add">Adicionar</string>
     <string name="refresh">Atualizar</string>
+    <string name="contact_info_label">Informações de contato</string>
+    <string name="contact_info_add_phone">Adicionar número de telefone</string>
+    <string name="contact_info_add_email">Adicionar email</string>
+    <string name="quick_action_call_label">Ligar</string>
+    <string name="quick_action_sms_label">Mensagem</string>
+    <string name="quick_action_video_label">Vídeo</string>
+    <string name="quick_action_email_label">E-mail</string>
+    <string name="default_error_content_text">Ocorreu um erro...</string>
+    <string name="appbar_back_label">Voltar</string>
+    <string name="appbar_edit_label">Editar</string>
+    <string name="appbar_delete_label">Remover</string>
+    <string name="default_loading_content_text">Carregando...</string>
+    <string name="contact_details_created_at_label">Cadastrado em %1$s</string>
 </resources>

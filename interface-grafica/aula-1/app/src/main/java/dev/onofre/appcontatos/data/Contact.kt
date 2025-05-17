@@ -1,6 +1,6 @@
 package dev.onofre.appcontatos.data
 
-import kotlin.random.Random
+import java.time.LocalDateTime
 
 data class Contact(
     val id: Int = 0,
@@ -8,7 +8,8 @@ data class Contact(
     val lastName: String = "",
     val phoneNumber: String = "",
     val email: String = "",
-    val isFavorite: Boolean = false
+    val isFavorite: Boolean = false,
+    val createdAt: LocalDateTime = LocalDateTime.now()
 ) {
     val fullName get(): String = "$firstName $lastName".trim()
 }

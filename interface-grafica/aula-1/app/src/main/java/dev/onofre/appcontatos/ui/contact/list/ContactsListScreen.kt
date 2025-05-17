@@ -1,22 +1,17 @@
-package dev.onofre.appcontatos.ui.contact
+package dev.onofre.appcontatos.ui.contact.list
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.CloudOff
 import androidx.compose.material.icons.filled.Refresh
-import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.ElevatedButton
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
@@ -43,6 +38,8 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import dev.onofre.appcontatos.data.generateMockContactList
 import dev.onofre.appcontatos.data.groupByInitial
 import dev.onofre.appcontatos.ui.contact.composables.ContactAvatar
+import dev.onofre.appcontatos.ui.contact.composables.DefaultErrorContent
+import dev.onofre.appcontatos.ui.contact.composables.DefaultLoadingContent
 import dev.onofre.appcontatos.ui.contact.composables.FavoriteIconButton
 
 @Composable
@@ -53,9 +50,12 @@ fun ContactsListScreen(
     val uiState = contactsListViewModel.state
 
     if (uiState.isLoading) {
-        LoadingContent()
+        DefaultLoadingContent(
+            text = stringResource(R.string.loading_contacts)
+        )
     } else if (uiState.hasError) {
-        ErrorContent(
+        DefaultErrorContent(
+            text = stringResource(R.string.error_loading),
             onTryAgainPressed = contactsListViewModel::loadContacts
         )
     } else {
@@ -127,82 +127,6 @@ fun AppBarPreview() {
     AppContatosTheme {
         AppBar(
             onRefreshPressed = {}
-        )
-    }
-}
-
-@Composable
-fun LoadingContent(modifier: Modifier = Modifier) {
-    Column(
-        modifier = modifier.fillMaxSize(),
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        CircularProgressIndicator(
-            color = MaterialTheme.colorScheme.primary,
-            trackColor = MaterialTheme.colorScheme.surfaceVariant,
-            modifier = Modifier.size(60.dp)
-        )
-        Spacer(Modifier.size(10.dp))
-        Text(
-            text = stringResource(R.string.loading_contacts),
-            style = MaterialTheme.typography.titleLarge,
-            color = MaterialTheme.colorScheme.primary
-        )
-    }
-}
-
-@Preview(showBackground = true, heightDp = 400)
-@Composable
-fun LoadingContentPreview() {
-    AppContatosTheme {
-        LoadingContent()
-    }
-}
-
-@Composable
-fun ErrorContent(
-    modifier: Modifier = Modifier,
-    onTryAgainPressed: () -> Unit
-) {
-    Column(
-        modifier = modifier.fillMaxSize(),
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        Icon(
-            imageVector = Icons.Filled.CloudOff,
-            contentDescription = stringResource(R.string.error_loading),
-            tint = MaterialTheme.colorScheme.primary,
-            modifier = Modifier.size(80.dp)
-        )
-        Text(
-            text = stringResource(R.string.error_loading),
-            modifier = Modifier.padding(top = 8.dp, start = 8.dp, end = 8.dp),
-            style = MaterialTheme.typography.titleLarge,
-            color = MaterialTheme.colorScheme.primary
-        )
-        Text(
-            text = stringResource(R.string.wait_and_try_again),
-            modifier = Modifier.padding(top = 8.dp, start = 8.dp, end = 8.dp),
-            style = MaterialTheme.typography.titleSmall,
-            color = MaterialTheme.colorScheme.primary
-        )
-        ElevatedButton(
-            onClick = onTryAgainPressed,
-            modifier = Modifier.padding(top = 16.dp)
-        ) {
-            Text(stringResource(R.string.try_again))
-        }
-    }
-}
-
-@Preview(showBackground = true, heightDp = 400)
-@Composable
-fun ErrorContentPreview() {
-    AppContatosTheme {
-        ErrorContent(
-            onTryAgainPressed = {}
         )
     }
 }

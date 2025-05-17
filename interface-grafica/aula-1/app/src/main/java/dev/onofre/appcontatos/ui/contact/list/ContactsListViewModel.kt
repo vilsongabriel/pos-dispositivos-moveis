@@ -1,4 +1,4 @@
-package dev.onofre.appcontatos.ui.contact
+package dev.onofre.appcontatos.ui.contact.list
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -12,7 +12,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class ContactsListViewModel : ViewModel() {
-    var state by mutableStateOf(ContactsListUiState())
+    var state by mutableStateOf(ContactsListState())
         private set
 
     private val datasource = ContactDatasource.instance
