@@ -6,7 +6,7 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dev.onofre.appcontatos.data.Contact
-import dev.onofre.appcontatos.data.generateMockContactList
+import dev.onofre.appcontatos.data.ContactDatasource
 import dev.onofre.appcontatos.data.groupByInitial
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -14,6 +14,8 @@ import kotlinx.coroutines.launch
 class ContactsListViewModel : ViewModel() {
     var state by mutableStateOf(ContactsListUiState())
         private set
+
+    private val datasource = ContactDatasource.instance
 
     init {
         loadContacts()
@@ -30,7 +32,7 @@ class ContactsListViewModel : ViewModel() {
             delay(fakeLoaderDelayMs)
 
             state = state.copy(
-                contacts = generateMockContactList().groupByInitial(),
+                contacts = datasource.findAll().groupByInitial(),
                 isLoading = false
             )
         }
