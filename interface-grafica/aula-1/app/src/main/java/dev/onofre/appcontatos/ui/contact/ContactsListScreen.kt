@@ -1,7 +1,9 @@
 package dev.onofre.appcontatos.ui.contact
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -12,8 +14,6 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.CloudOff
-import androidx.compose.material.icons.filled.Favorite
-import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ElevatedButton
@@ -22,20 +22,14 @@ import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.ListItem
-import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
@@ -45,75 +39,36 @@ import dev.onofre.appcontatos.R
 import dev.onofre.appcontatos.data.Contact
 import dev.onofre.appcontatos.ui.theme.AppContatosTheme
 import androidx.compose.foundation.lazy.items
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
-import kotlin.random.Random
+import androidx.lifecycle.viewmodel.compose.viewModel
+import dev.onofre.appcontatos.data.generateMockContactList
+import dev.onofre.appcontatos.data.groupByInitial
+import dev.onofre.appcontatos.ui.contact.composables.ContactAvatar
+import dev.onofre.appcontatos.ui.contact.composables.FavoriteIconButton
 
 @Composable
-fun ContactsListScreen(modifier: Modifier = Modifier) {
-    val isInitialComposition: MutableState<Boolean> = rememberSaveable { mutableStateOf(true) }
-    val isLoading: MutableState<Boolean> = rememberSaveable { mutableStateOf(false) }
-    var hasError: MutableState<Boolean> = rememberSaveable { mutableStateOf(false) }
-    val contacts: MutableState<List<Contact>> = rememberSaveable { mutableStateOf(listOf()) }
+fun ContactsListScreen(
+    modifier: Modifier = Modifier,
+    contactsListViewModel: ContactsListViewModel = viewModel()
+) {
+    val uiState = contactsListViewModel.state
 
-    val coroutineScope: CoroutineScope = rememberCoroutineScope()
-
-    val loadContacts: () -> Unit = {
-        isLoading.value = true
-        hasError.value = false
-
-        coroutineScope.launch {
-            delay(2000)
-            hasError.value = Random.nextBoolean()
-
-            if (!hasError.value) {
-                val isEmptyList = Random.nextBoolean()
-                if (isEmptyList) {
-                    contacts.value = listOf()
-                } else {
-                    contacts.value = generateContacts()
-                }
-            }
-
-            isLoading.value = false
-        }
-    }
-
-    val toggleFavorite: (Contact) -> Unit = { contact ->
-        contacts.value = contacts.value.map {
-            if (it.id == contact.id) {
-                it.copy(isFavorite = !it.isFavorite)
-            } else {
-                it
-            }
-        }
-    }
-
-    if (isInitialComposition.value) {
-        loadContacts()
-        isInitialComposition.value = false
-    }
-
-    if (isLoading.value) {
+    if (uiState.isLoading) {
         LoadingContent()
-    } else if (hasError.value) {
+    } else if (uiState.hasError) {
         ErrorContent(
-            onTryAgainPressed = loadContacts
+            onTryAgainPressed = contactsListViewModel::loadContacts
         )
     } else {
         Scaffold(
             modifier = modifier.fillMaxSize(),
             topBar = {
                 AppBar(
-                    onRefreshPressed = loadContacts
+                    onRefreshPressed = contactsListViewModel::loadContacts
                 )
             },
             floatingActionButton = {
                 FloatingActionButton(
-                    onClick = {
-                        contacts.value = contacts.value.plus(Contact(firstName = "Teste"))
-                    }
+                    onClick = {}
                 ) {
                     Icon(
                         imageVector = Icons.Filled.Add,
@@ -122,15 +77,15 @@ fun ContactsListScreen(modifier: Modifier = Modifier) {
                 }
             }
         ) { paddingValues ->
-            if (contacts.value.isEmpty()) {
+            if (uiState.contacts.isEmpty()) {
                 EmptyList(
                     modifier = Modifier.padding(paddingValues)
                 )
             } else {
                 List(
                     modifier = Modifier.padding(paddingValues),
-                    contacts = contacts.value,
-                    onFavoritePressed = toggleFavorite
+                    contacts = uiState.contacts,
+                    onFavoritePressed = contactsListViewModel::toggleFavorite
                 )
             }
         }
@@ -261,7 +216,7 @@ fun EmptyList(modifier: Modifier = Modifier) {
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Image(
-            painter = painterResource(R.drawable.`no_data`),
+            painter = painterResource(R.drawable.no_data),
             contentDescription = stringResource(R.string.no_data)
         )
         Text(
@@ -291,17 +246,35 @@ fun EptyListPreview() {
 @Composable
 fun List(
     modifier: Modifier = Modifier,
-    contacts: List<Contact>,
+    contacts: Map<String, List<Contact>>,
     onFavoritePressed: (Contact) -> Unit
 ) {
     LazyColumn(
         modifier = modifier.fillMaxSize()
     ) {
-        items(contacts) { contact ->
-            ContactListItem(
-                contact = contact,
-                onFavoritePressed = onFavoritePressed
-            )
+        contacts.forEach { initial, contacts ->
+            stickyHeader {
+                Box (
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .background(color = MaterialTheme.colorScheme.secondaryContainer)
+                ) {
+                    Text(
+                        text = initial,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(vertical = 8.dp)
+                            .padding(start = 16.dp),
+                        color = MaterialTheme.colorScheme.secondary
+                    )
+                }
+            }
+            items(contacts) { contact ->
+                ContactListItem(
+                    contact = contact,
+                    onFavoritePressed = onFavoritePressed
+                )
+            }
         }
     }
 }
@@ -311,7 +284,7 @@ fun List(
 fun ListPreview() {
     AppContatosTheme {
         List(
-            contacts = generateContacts(),
+            contacts = generateMockContactList().groupByInitial(),
             onFavoritePressed = {}
         )
     }
@@ -328,56 +301,18 @@ fun ContactListItem(
         headlineContent = {
             Text(contact.fullName)
         },
-        leadingContent = {},
+        leadingContent = {
+            ContactAvatar(
+                firstName = contact.firstName,
+                lastName = contact.lastName
+            )
+        },
         trailingContent = {
-            IconButton(
-                onClick = {
-                    onFavoritePressed(contact)
-                }
-            ) {
-                Icon(
-                    imageVector = if (contact.isFavorite) {
-                        Icons.Filled.Favorite
-                    } else {
-                        Icons.Filled.FavoriteBorder
-                    },
-                    contentDescription = stringResource(R.string.to_favorite),
-                    tint = if (contact.isFavorite) {
-                        Color.Red
-                    } else {
-                        LocalContentColor.current
-                    }
-                )
-            }
+            FavoriteIconButton(
+                isFavorite = contact.isFavorite,
+                onPressed = { onFavoritePressed(contact) }
+            )
         }
     )
 }
 
-private fun generateContacts(): List<Contact> {
-    val firstNames = listOf(
-        "João", "José", "Everton", "Marcos", "André", "Anderson", "Antônio",
-        "Laura", "Ana", "Maria", "Joaquina", "Suelen", "Samuel"
-    )
-    val lastNames = listOf(
-        "Do Carmo", "Oliveira", "Dos Santos", "Da Silva", "Brasil", "Pichetti",
-        "Cordeiro", "Silveira", "Andrades", "Cardoso", "Souza"
-    )
-    val contacts: MutableList<Contact> = mutableListOf()
-    for (i in 0..19) {
-        var generatedNewContact = false
-        while (!generatedNewContact) {
-            val firstNameIndex = Random.nextInt(firstNames.size)
-            val lastNameIndex = Random.nextInt(lastNames.size)
-            val newContact = Contact(
-                id = i + 1,
-                firstName = firstNames[firstNameIndex],
-                lastName = lastNames[lastNameIndex]
-            )
-            if (!contacts.any { it.fullName == newContact.fullName }) {
-                contacts.add(newContact)
-                generatedNewContact = true
-            }
-        }
-    }
-    return contacts
-}
